@@ -1,5 +1,7 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
+import Feather from "@expo/vector-icons/Feather";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -11,8 +13,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Feather from "@expo/vector-icons/Feather";
-import { router } from "expo-router";
 
 export default function ResetPassword() {
   const [isFocused, setIsFocused] = useState(false);
@@ -23,16 +23,16 @@ export default function ResetPassword() {
 
   const handleProceed = () => {
     setLoading(true);
-    console.log("loading...")
+    console.log("loading...");
     setTimeout(() => {
-        setLoading(false);
-        router.replace("/(auth)/login");
-        console.log("loading stopped");
-    }, 3000)
-  }
+      setLoading(false);
+      router.replace("/(auth)/login");
+      console.log("loading stopped");
+    }, 3000);
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <Image source={require("@/assets/images/app-logo.png")} />
 
@@ -48,7 +48,9 @@ export default function ResetPassword() {
 
         <View style={styles.formContainer}>
           <View style={styles.passwordInputContainer}>
-            <AppText color="#363a33" weight="semibold" size={16}>New Password</AppText>
+            <AppText color="#363a33" weight="semibold" size={16}>
+              New Password
+            </AppText>
             <TextInput
               placeholder="Your new password"
               placeholderTextColor="#60655c"
@@ -74,7 +76,9 @@ export default function ResetPassword() {
           </View>
 
           <View style={styles.passwordInputContainer}>
-            <AppText color="#363a33" weight="semibold" size={16}>Confirm New Password</AppText>
+            <AppText color="#363a33" weight="semibold" size={16}>
+              Confirm New Password
+            </AppText>
             <TextInput
               placeholder="Confirm your new password"
               placeholderTextColor="#60655c"
@@ -88,7 +92,9 @@ export default function ResetPassword() {
               onBlur={() => setIsPasswordFocused(false)}
             />
             <TouchableOpacity
-              onPress={() => setIsConfirmOpen((isConfirmOpen) => !isConfirmOpen)}
+              onPress={() =>
+                setIsConfirmOpen((isConfirmOpen) => !isConfirmOpen)
+              }
               style={styles.passwordIconButton}
             >
               <Feather
@@ -101,14 +107,20 @@ export default function ResetPassword() {
         </View>
 
         <View style={{ width: "100%" }}>
-          <Button label="Reset password" onPress={handleProceed} loading={loading} />
+          <Button
+            label="Reset password"
+            onPress={handleProceed}
+            loading={loading}
+          />
         </View>
 
         <View style={{ marginTop: 100, flexDirection: "row", gap: 3 }}>
-            <AppText size={17}>Don't have an account?</AppText>
-            <TouchableOpacity  onPress={() => router.replace("/(auth)/signup")}>
-                <AppText size={17} weight="bold">Sign up</AppText>
-            </TouchableOpacity>
+          <AppText size={17}>Don't have an account?</AppText>
+          <TouchableOpacity onPress={() => router.replace("/(auth)/signup")}>
+            <AppText size={17} weight="bold">
+              Sign up
+            </AppText>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -125,7 +137,7 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 30,
     alignSelf: "flex-start",
-    gap: 5
+    gap: 5,
   },
   textInput: {
     borderWidth: 1.5,
@@ -149,11 +161,11 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 10,
   },
-   passwordInputContainer: {
+  passwordInputContainer: {
     position: "relative",
     width: "100%",
     marginTop: 8,
-    gap: 4
+    gap: 4,
   },
   passwordInput: {
     width: "100%",

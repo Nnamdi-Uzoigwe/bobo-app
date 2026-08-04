@@ -1,5 +1,7 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
+import Feather from "@expo/vector-icons/Feather";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -11,8 +13,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Feather from "@expo/vector-icons/Feather";
-import { router } from "expo-router";
 
 export default function Signup() {
   const [isFocused, setIsFocused] = useState(false);
@@ -22,16 +22,16 @@ export default function Signup() {
 
   const handleProceed = () => {
     setLoading(true);
-    console.log("loading...")
+    console.log("loading...");
     setTimeout(() => {
-        setLoading(false);
-        router.replace("/(auth)/verify-account");
-        console.log("loading stopped");
-    }, 3000)
-  }
+      setLoading(false);
+      router.replace("/(auth)/verify-account");
+      console.log("loading stopped");
+    }, 3000);
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <Image source={require("@/assets/images/app-logo.png")} />
 
@@ -56,7 +56,9 @@ export default function Signup() {
             />
           </View>
           <View style={styles.passwordInputContainer}>
-            <AppText color="#363a33" weight="semibold" size={16}>Password</AppText>
+            <AppText color="#363a33" weight="semibold" size={16}>
+              Password
+            </AppText>
             <TextInput
               placeholder="Password"
               placeholderTextColor="#60655c"
@@ -82,21 +84,27 @@ export default function Signup() {
           </View>
 
           <TouchableOpacity>
-            <AppText weight="semibold" color="#5ead1d">Forgot Password?</AppText>
+            <AppText weight="semibold" color="#5ead1d">
+              Forgot Password?
+            </AppText>
           </TouchableOpacity>
-            
         </View>
 
-
         <View style={{ width: "100%" }}>
-          <Button label="Create account" onPress={handleProceed} loading={loading} />
+          <Button
+            label="Create account"
+            onPress={handleProceed}
+            loading={loading}
+          />
         </View>
 
         <View style={{ marginTop: 100, flexDirection: "row", gap: 3 }}>
-            <AppText size={17}>Already have an account?</AppText>
-            <TouchableOpacity onPress={() => router.back}>
-                <AppText size={17} weight="bold">Log in</AppText>
-            </TouchableOpacity>
+          <AppText size={17}>Already have an account?</AppText>
+          <TouchableOpacity onPress={() => router.back}>
+            <AppText size={17} weight="bold">
+              Log in
+            </AppText>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -140,7 +148,7 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
     marginTop: 8,
-    gap: 4
+    gap: 4,
   },
   passwordInput: {
     width: "100%",

@@ -1,5 +1,6 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -11,8 +12,6 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Feather from "@expo/vector-icons/Feather";
-import { router } from "expo-router";
 
 export default function ForgotPassword() {
   const [isFocused, setIsFocused] = useState(false);
@@ -22,16 +21,16 @@ export default function ForgotPassword() {
 
   const handleProceed = () => {
     setLoading(true);
-    console.log("loading...")
+    console.log("loading...");
     setTimeout(() => {
-        setLoading(false);
-        router.replace("/(auth)/verify-otp");
-        console.log("loading stopped");
-    }, 3000)
-  }
+      setLoading(false);
+      router.replace("/(auth)/verify-otp");
+      console.log("loading stopped");
+    }, 3000);
+  };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <Image source={require("@/assets/images/app-logo.png")} />
 
@@ -41,7 +40,8 @@ export default function ForgotPassword() {
           </AppText>
 
           <AppText color="#363A33" weight="medium" size={17}>
-            Enter the email address associated with your account. We'll send a verification code to this email.
+            Enter the email address associated with your account. We'll send a
+            verification code to this email.
           </AppText>
         </View>
 
@@ -67,10 +67,12 @@ export default function ForgotPassword() {
         </View>
 
         <View style={{ marginTop: 100, flexDirection: "row", gap: 3 }}>
-            <AppText size={17}>Don't have an account?</AppText>
-            <TouchableOpacity  onPress={() => router.replace("/(auth)/signup")}>
-                <AppText size={17} weight="bold">Sign up</AppText>
-            </TouchableOpacity>
+          <AppText size={17}>Don't have an account?</AppText>
+          <TouchableOpacity onPress={() => router.replace("/(auth)/signup")}>
+            <AppText size={17} weight="bold">
+              Sign up
+            </AppText>
+          </TouchableOpacity>
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 30,
     alignSelf: "flex-start",
-    gap: 5
+    gap: 5,
   },
   textInput: {
     borderWidth: 1.5,
