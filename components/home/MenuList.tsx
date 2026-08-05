@@ -16,11 +16,10 @@ export default function MenuList({ category = "All" }: MenuListProps) {
       : foodData.filter((item) => item.category === category);
 
   const handlePress = (item: FoodItem) => {
-    // router.push(`/product/${item.id}`);
+    router.push(`/product/${item.id}`);
   };
 
   const handleAddPress = (item: FoodItem) => {
-    // TODO: wire up to cart/state management
     console.log("added to cart:", item.name);
   };
 

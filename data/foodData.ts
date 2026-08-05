@@ -29,7 +29,7 @@ export const foodData: FoodItem[] = [
     rating: 4.6,
     image: require("@/assets/images/classic-cheeseburger.png"),
     description:
-      "Juicy beef patty with melted cheddar, lettuce, tomato and house sauce in a toasted bun.",
+      "Made with a premium grilled beef patty, melted cheddar cheese, crisp lettuce, vine-ripened tomatoes, onions, crunchy pickles, and our signature house sauce, all layered inside a freshly toasted brioche bun. Every bite delivers the perfect balance of savory, fresh, and flavorful ingredients.",
     kcal: 540,
     category: "burger",
   },
@@ -40,7 +40,7 @@ export const foodData: FoodItem[] = [
     rating: 4.8,
     image: require("@/assets/images/double-burger.png"),
     description:
-      "Two grilled beef patties stacked with pickles, onions and smoky BBQ sauce.",
+      "Loaded with two perfectly grilled beef patties, melted cheddar cheese, crisp lettuce, juicy tomatoes, crunchy pickles, fresh onions, and our signature smoky BBQ sauce, this burger is stacked high in a buttery toasted brioche bun for an irresistibly bold and satisfying meal.",
     kcal: 780,
     category: "burger",
   },
@@ -51,7 +51,7 @@ export const foodData: FoodItem[] = [
     rating: 4.7,
     image: require("@/assets/images/pepperoni-pizza.png"),
     description:
-      "Classic tomato base topped with mozzarella and spicy pepperoni slices.",
+      "Crafted with our signature tomato sauce, topped with creamy mozzarella cheese and generous slices of spicy pepperoni, then stone-baked until the crust is perfectly crisp and the cheese is bubbly and golden. Every slice delivers the perfect balance of smoky, cheesy, and savory flavors.",
     kcal: 890,
     category: "pizza",
   },
@@ -62,7 +62,7 @@ export const foodData: FoodItem[] = [
     rating: 4.7,
     image: require("@/assets/images/beef-wrap.png"),
     description:
-      "Spiced shredded beef with pickles, onions and tahini sauce in a warm wrap.",
+      "Made with tender, spiced shredded beef, crisp pickles, fresh onions, tomatoes, and creamy tahini sauce, all wrapped in soft flatbread and lightly grilled to perfection. This shawarma delivers a delicious balance of smoky, savory, and tangy flavors with every bite.",
     kcal: 620,
     category: "meat wraps",
   },
@@ -73,7 +73,7 @@ export const foodData: FoodItem[] = [
     rating: 4.4,
     image: require("@/assets/images/chicken-burger.png"),
     description:
-      "Crispy fried chicken breast with mayo, lettuce and a soft brioche bun.",
+      "Made with a tender, crispy fried chicken breast, fresh lettuce, ripe tomatoes, creamy mayonnaise, and our signature sauce, all layered inside a freshly toasted brioche bun. Every bite offers a satisfying crunch followed by juicy, flavorful chicken and fresh ingredients.",
     kcal: 490,
     category: "burger",
   },
@@ -84,7 +84,7 @@ export const foodData: FoodItem[] = [
     rating: 4.5,
     image: require("@/assets/images/mag-pizza.png"),
     description:
-      "Simple and classic, with fresh basil, mozzarella and San Marzano tomato sauce.",
+      "A timeless Italian classic made with San Marzano tomato sauce, creamy fresh mozzarella, fragrant basil leaves, and a drizzle of extra virgin olive oil. Baked on a thin, crispy crust until the cheese is perfectly melted, delivering a light, fresh, and authentic flavor in every slice.",
     kcal: 720,
     category: "pizza",
   },
@@ -95,7 +95,7 @@ export const foodData: FoodItem[] = [
     rating: 4.6,
     image: require("@/assets/images/bbq-pizza.png"),
     description:
-      "Grilled chicken chunks, red onions and smoky BBQ sauce on a crispy crust.",
+      "Loaded with juicy grilled chicken, smoky BBQ sauce, creamy mozzarella cheese, sliced red onions, and fresh herbs on a perfectly baked crispy crust. Every slice combines rich, smoky flavors with a hint of sweetness for a bold and satisfying pizza experience.",
     kcal: 860,
     category: "pizza",
   },
@@ -106,7 +106,7 @@ export const foodData: FoodItem[] = [
     rating: 4.5,
     image: require("@/assets/images/grilled-wrap.png"),
     description:
-      "Grilled chicken strips, lettuce and garlic sauce rolled in a soft tortilla.",
+      "Made with perfectly seasoned grilled chicken strips, fresh lettuce, ripe tomatoes, crunchy onions, and rich garlic sauce, all wrapped in a warm, soft tortilla and lightly grilled until golden. Every bite is packed with fresh ingredients and bold, satisfying flavor.",
     kcal: 460,
     category: "meat wraps",
   },

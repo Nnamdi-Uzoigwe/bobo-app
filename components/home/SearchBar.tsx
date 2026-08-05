@@ -1,56 +1,42 @@
-// import { Feather } from "@expo/vector-icons";
-// import { useState } from "react";
-// import { StyleSheet, TextInput, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { StyleSheet, TextInput, View } from "react-native";
+
+type SearchBarProps = {
+  value: string;
+  onChangeText: (text: string) => void;
+  isFocused: boolean;
+  onFocus: () => void;
+  onBlur: () => void;
+};
 
 // export default function SearchBar() {
 //   const [isFocused, setIsFocused] = useState(false);
+
 //   return (
-//     <View>
-//       <TextInput
-//         placeholder="Search..."
-//         style={[styles.input, isFocused && styles.textInputFocused]}
-//         placeholderTextColor="#60655c"
-//         onFocus={() => setIsFocused(true)}
-//         onBlur={() => setIsFocused(false)}
-//       />
+//     <View style={[styles.container, isFocused && styles.containerFocused]}>
 //       <Feather
-//         style={styles.searchIcon}
 //         name="search"
 //         size={20}
-//         color="#c4c6c2"
+//         color={isFocused ? "#5ead1d" : "#9CA3AF"}
+//       />
+//       <TextInput
+//         placeholder="Search..."
+//         style={styles.input}
+//         placeholderTextColor="#9CA3AF"
+//         onFocus={() => setIsFocused(true)}
+//         onBlur={() => setIsFocused(false)}
 //       />
 //     </View>
 //   );
 // }
 
-// const styles = StyleSheet.create({
-//   input: {
-//     borderWidth: 1,
-//     borderColor: "#c4c6c2",
-//     padding: 14,
-//     borderRadius: 14,
-//     fontSize: 15,
-//     fontFamily: "Poppins-Regular",
-//     position: "relative",
-//     paddingLeft: 34,
-//   },
-//   searchIcon: {
-//     position: "absolute",
-//     top: 14,
-//     left: 10,
-//   },
-//   textInputFocused: {
-//     borderColor: "#5ead1d",
-//   },
-// });
-
-import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
-
-export default function SearchBar() {
-  const [isFocused, setIsFocused] = useState(false);
-
+export default function SearchBar({
+  value,
+  onChangeText,
+  isFocused,
+  onFocus,
+  onBlur,
+}: SearchBarProps) {
   return (
     <View style={[styles.container, isFocused && styles.containerFocused]}>
       <Feather
@@ -58,12 +44,15 @@ export default function SearchBar() {
         size={20}
         color={isFocused ? "#5ead1d" : "#9CA3AF"}
       />
+
       <TextInput
+        value={value}
+        onChangeText={onChangeText}
+        onFocus={onFocus}
+        onBlur={onBlur}
         placeholder="Search..."
-        style={styles.input}
         placeholderTextColor="#9CA3AF"
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        style={styles.input}
       />
     </View>
   );
