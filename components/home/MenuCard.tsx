@@ -1,4 +1,5 @@
 import type { FoodItem } from "@/data/foodData";
+import { useCartStore } from "@/store/cartStore";
 import { Feather } from "@expo/vector-icons";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import AppText from "../AppText";
@@ -10,6 +11,12 @@ type MenuCardProps = {
 };
 
 export default function MenuCard({ item, onPress, onAddPress }: MenuCardProps) {
+  const addToCart = useCartStore((s) => s.addToCart);
+  const { id, name, image, price } = item;
+  const quantity = 1;
+  const handleAddToCart = () => {
+    addToCart({ id, name, image, price }, quantity);
+  };
   return (
     <Pressable style={styles.card} onPress={() => onPress?.(item)}>
       <View style={styles.imageWrapper}>
@@ -37,7 +44,7 @@ export default function MenuCard({ item, onPress, onAddPress }: MenuCardProps) {
           </AppText>
         </View>
 
-        <Pressable style={styles.addButton} onPress={() => onAddPress?.(item)}>
+        <Pressable style={styles.addButton} onPress={handleAddToCart}>
           <Feather name="plus" size={18} color="#5EAD1D" />
         </Pressable>
       </View>

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 20,
-    alignSelf: "flex-start",
+    // alignSelf: "flex-start",
   },
 
   filledButton: {

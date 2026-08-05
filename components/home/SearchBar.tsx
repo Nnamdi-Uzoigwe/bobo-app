@@ -9,27 +9,6 @@ type SearchBarProps = {
   onBlur: () => void;
 };
 
-// export default function SearchBar() {
-//   const [isFocused, setIsFocused] = useState(false);
-
-//   return (
-//     <View style={[styles.container, isFocused && styles.containerFocused]}>
-//       <Feather
-//         name="search"
-//         size={20}
-//         color={isFocused ? "#5ead1d" : "#9CA3AF"}
-//       />
-//       <TextInput
-//         placeholder="Search..."
-//         style={styles.input}
-//         placeholderTextColor="#9CA3AF"
-//         onFocus={() => setIsFocused(true)}
-//         onBlur={() => setIsFocused(false)}
-//       />
-//     </View>
-//   );
-// }
-
 export default function SearchBar({
   value,
   onChangeText,

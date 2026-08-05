@@ -43,6 +43,7 @@ export default function ProductDetail() {
       <ScrollView>
         <DetailHeader />
         <DetailDescription
+          id={product.id}
           image={product.image}
           rating={product.rating}
           calories={product.kcal}
