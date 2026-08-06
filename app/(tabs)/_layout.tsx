@@ -90,8 +90,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.iconWrapper}>
               <View>
-                <Feather name="bell" size={24} color={color} />
-                <View style={styles.notificationDot} />
+                <Feather name="user" size={24} color={color} />
               </View>
               {focused && <View style={styles.activeDot} />}
             </View>
@@ -124,17 +123,17 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: ACTIVE_COLOR,
   },
-  notificationDot: {
-    position: "absolute",
-    top: -2,
-    right: -4,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#EF4444",
-    borderWidth: 1.5,
-    borderColor: "#FFFFFF",
-  },
+  // notificationDot: {
+  //   position: "absolute",
+  //   top: -2,
+  //   right: -4,
+  //   width: 8,
+  //   height: 8,
+  //   borderRadius: 4,
+  //   backgroundColor: "#EF4444",
+  //   borderWidth: 1.5,
+  //   borderColor: "#FFFFFF",
+  // },
   badge: {
     position: "absolute",
     top: -6,

@@ -41,7 +41,12 @@ export default function ProductDetail() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <DetailHeader />
+        <DetailHeader
+          id={product.id}
+          image={product.image}
+          name={product.name}
+          price={product.price}
+        />
         <DetailDescription
           id={product.id}
           image={product.image}

@@ -1,37 +1,5 @@
-// import { Image, StyleSheet, View } from "react-native";
-// import AppText from "../AppText";
-
-// export default function HomeHeader() {
-//   const username = "Nnamdi";
-//   return (
-//     <View style={styles.header}>
-//       <View>
-//         <AppText color="#363a33" size={16} weight="semibold">
-//           Hi <AppText color="#5EAD1D">{username}</AppText>
-//         </AppText>
-//         <AppText color="#363a33" size={18}>
-//           What are you craving?
-//         </AppText>
-//       </View>
-
-//       {/* Avatar */}
-//       <View>
-//         <Image source={require("@/assets/images/avatar.png")} />
-//       </View>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   header: {
-//     flexDirection: "row",
-//     justifyContent: "space-between",
-//     alignItems: "center",
-//     marginTop: 15,
-//   },
-// });
-
-import { Image, StyleSheet, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import AppText from "../AppText";
 
 export default function HomeHeader() {
@@ -42,15 +10,21 @@ export default function HomeHeader() {
         <AppText color="#8A8F84" size={14} weight="medium">
           Hi {username} 👋
         </AppText>
-        <AppText color="#363a33" size={20} weight="bold">
+        <AppText color="#363a33" size={18} weight="bold">
           What are you craving?
         </AppText>
       </View>
 
-      <Image
-        source={require("@/assets/images/avatar.png")}
-        style={styles.avatar}
-      />
+      <View style={styles.avatarContainer}>
+        <TouchableOpacity>
+          <Feather name="bell" size={24} color="#565c51" />
+        </TouchableOpacity>
+
+        <Image
+          source={require("@/assets/images/avatar.png")}
+          style={styles.avatar}
+        />
+      </View>
     </View>
   );
 }
@@ -71,5 +45,10 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     borderWidth: 2,
     borderColor: "#ECF1E8",
+  },
+  avatarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 20,
   },
 });
