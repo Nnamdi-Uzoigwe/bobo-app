@@ -1,4 +1,5 @@
 import { Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import AppText from "../AppText";
 
@@ -16,7 +17,7 @@ export default function HomeHeader() {
       </View>
 
       <View style={styles.avatarContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push("/notifications")}>
           <Feather name="bell" size={24} color="#565c51" />
         </TouchableOpacity>
 
@@ -40,9 +41,9 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     borderWidth: 2,
     borderColor: "#ECF1E8",
   },

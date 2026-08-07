@@ -276,6 +276,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     alignItems: "center",
     paddingHorizontal: 10,
+    paddingTop: 15,
     paddingBottom: 40,
     gap: 10,
   },
@@ -286,7 +287,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1,
-    borderColor: "#b5b6b5",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     padding: 14,
     borderRadius: 10,
     fontSize: 16,

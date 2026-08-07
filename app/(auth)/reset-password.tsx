@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function ResetPassword() {
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [ConfirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -83,13 +84,13 @@ export default function ResetPassword() {
               placeholder="Confirm your new password"
               placeholderTextColor="#60655c"
               textContentType="password"
-              secureTextEntry={!isOpen}
+              secureTextEntry={!isConfirmOpen}
               style={[
                 styles.passwordInput,
-                isPasswordFocused && styles.passwordInputFocused,
+                ConfirmPasswordFocused && styles.confirmPasswordInputFocused,
               ]}
-              onFocus={() => setIsPasswordFocused(true)}
-              onBlur={() => setIsPasswordFocused(false)}
+              onFocus={() => setConfirmPasswordFocused(true)}
+              onBlur={() => setConfirmPasswordFocused(false)}
             />
             <TouchableOpacity
               onPress={() =>
@@ -98,7 +99,7 @@ export default function ResetPassword() {
               style={styles.passwordIconButton}
             >
               <Feather
-                name={isOpen ? "eye" : "eye-off"}
+                name={isConfirmOpen ? "eye" : "eye-off"}
                 size={18}
                 color="#363a33"
               />
@@ -133,6 +134,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     paddingHorizontal: 10,
+    paddingTop: 15,
   },
   header: {
     marginTop: 30,
@@ -141,7 +143,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1.5,
-    borderColor: "#b5b6b5",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     padding: 14,
     borderRadius: 10,
     fontSize: 16,
@@ -170,7 +173,8 @@ const styles = StyleSheet.create({
   passwordInput: {
     width: "100%",
     borderWidth: 1.5,
-    borderColor: "#b5b6b5",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     padding: 14,
     paddingRight: 50,
     borderRadius: 10,
@@ -189,5 +193,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
+  },
+  confirmPasswordInputFocused: {
+    borderColor: "#5ead1d",
   },
 });

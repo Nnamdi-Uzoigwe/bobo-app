@@ -35,7 +35,12 @@ export default function ExploreScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "white", paddingHorizontal: 16 },
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingTop: 15,
+    paddingHorizontal: 10,
+  },
   searchBar: {
     flexDirection: "row",
     alignItems: "center",

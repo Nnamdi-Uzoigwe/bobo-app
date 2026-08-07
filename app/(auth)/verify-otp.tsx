@@ -4,12 +4,12 @@ import OtpInput from "@/components/OtpInput";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    Image,
-    Keyboard,
-    StyleSheet,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    View,
+  Image,
+  Keyboard,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     paddingHorizontal: 10,
+    paddingTop: 15,
   },
   header: {
     marginTop: 30,

@@ -112,8 +112,8 @@ export default function OrderPlacedScreen() {
 
       <View style={styles.footer}>
         <Button
-          label="Track my order"
-          onPress={() => {}}
+          label="View my order"
+          onPress={() => router.replace("/orders")}
           style={styles.trackButton}
         />
       </View>

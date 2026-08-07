@@ -59,7 +59,7 @@ export default function Banner() {
         >
           35% OFF on Burgers!
         </AppText>
-        <Button label="Buy Now" onPress={() => {}} style={{ width: 120 }} />
+        <Button style={{ width: 120 }} label="Buy Now" onPress={() => {}} />
       </View>
 
       <View style={styles.imageContainer}>

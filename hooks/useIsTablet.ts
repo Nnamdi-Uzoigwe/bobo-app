@@ -13,3 +13,13 @@ export function useIsTablet() {
 
   return isTablet;
 }
+
+// // hooks/useIsTablet.ts
+// import { useWindowDimensions } from "react-native";
+
+// export function useIsTablet() {
+//   const { width, height } = useWindowDimensions();
+//   const smallestDimension = Math.min(width, height);
+
+//   return smallestDimension >= 600;
+// }

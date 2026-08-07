@@ -1,6 +1,7 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
 import { useCartStore } from "@/store/cartStore";
+import { useOrdersStore } from "@/store/ordersStore";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Image, ScrollView, StyleSheet, View } from "react-native";
@@ -11,6 +12,14 @@ export default function Checkout() {
   const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const deliveryFee = 2.5;
   const grandTotal = totalPrice + deliveryFee;
+  const clearCart = useCartStore((s) => s.clearCart);
+  const placeOrder = useOrdersStore((s) => s.placeOrder);
+
+  const handleCheckout = () => {
+    placeOrder(items);
+    clearCart();
+    router.push("/cart/order-placed");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -104,7 +113,7 @@ export default function Checkout() {
       <View style={styles.footer}>
         <Button
           label="Place Order"
-          onPress={() => router.push("/cart/order-placed")}
+          onPress={handleCheckout}
           style={styles.placeOrderButton}
         />
       </View>

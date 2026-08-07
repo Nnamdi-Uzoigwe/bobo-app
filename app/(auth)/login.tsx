@@ -22,7 +22,10 @@ export default function Login() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
-        <Image source={require("@/assets/images/app-logo.png")} />
+        <Image
+          source={require("@/assets/images/app-logo.png")}
+          // style={styles.image}
+        />
 
         <View style={styles.header}>
           <AppText color="#5ead1d" weight="bold" size={30}>
@@ -112,6 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     paddingHorizontal: 10,
+    paddingTop: 15,
   },
   header: {
     marginTop: 30,
@@ -119,7 +123,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1.5,
-    borderColor: "#b5b6b5",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     padding: 14,
     borderRadius: 10,
     fontSize: 16,
@@ -148,7 +153,8 @@ const styles = StyleSheet.create({
   passwordInput: {
     width: "100%",
     borderWidth: 1.5,
-    borderColor: "#b5b6b5",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     padding: 14,
     paddingRight: 50,
     borderRadius: 10,
@@ -167,5 +173,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
+  },
+  image: {
+    height: 100,
+    // width: "100%",
   },
 });

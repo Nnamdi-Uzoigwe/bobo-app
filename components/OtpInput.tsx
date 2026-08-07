@@ -12,10 +12,7 @@ type OTPInputProps = {
   onComplete?: (otp: string) => void;
 };
 
-export default function OTPInput({
-  length = 4,
-  onComplete,
-}: OTPInputProps) {
+export default function OTPInput({ length = 4, onComplete }: OTPInputProps) {
   const [otp, setOtp] = useState<string[]>(Array(length).fill(""));
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
@@ -54,7 +51,7 @@ export default function OTPInput({
 
   const handleKeyPress = (
     event: NativeSyntheticEvent<TextInputKeyPressEventData>,
-    index: number
+    index: number,
   ) => {
     if (
       event.nativeEvent.key === "Backspace" &&
@@ -80,10 +77,7 @@ export default function OTPInput({
           onBlur={() => setFocusedIndex(null)}
           keyboardType="number-pad"
           maxLength={1}
-          style={[
-            styles.input,
-            focusedIndex === index && styles.inputFocused,
-          ]}
+          style={[styles.input, focusedIndex === index && styles.inputFocused]}
           textAlign="center"
           selectionColor="#5ead1d"
         />
@@ -104,7 +98,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderWidth: 1.5,
-    borderColor: "#b5b6b5",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     borderRadius: 10,
     fontSize: 24,
     fontFamily: "PoppinsRegular",

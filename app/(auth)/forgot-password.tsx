@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     paddingHorizontal: 10,
+    paddingTop: 15,
   },
   header: {
     marginTop: 30,
@@ -93,7 +94,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1.5,
-    borderColor: "#b5b6b5",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     padding: 14,
     borderRadius: 10,
     fontSize: 16,

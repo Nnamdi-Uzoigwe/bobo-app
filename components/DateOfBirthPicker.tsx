@@ -1,12 +1,12 @@
 // components/DateOfBirthPicker.tsx
 import { Dispatch, SetStateAction, useMemo, useRef, useState } from "react";
 import {
-    FlatList,
-    Modal,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const MONTHS = [
@@ -250,7 +250,8 @@ export default function DateOfBirthPicker({
 const styles = StyleSheet.create({
   inputBox: {
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: "#f5f6f3",
+    backgroundColor: "#F5F6F3",
     borderRadius: 12,
     height: 52,
     paddingHorizontal: 14,
