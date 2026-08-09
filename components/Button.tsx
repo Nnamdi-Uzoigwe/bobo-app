@@ -12,6 +12,7 @@ type ButtonProps = {
   onPress: () => void;
   outline?: boolean;
   loading?: boolean;
+  disabled?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -20,15 +21,20 @@ export default function Button({
   onPress,
   loading,
   outline = false,
+  disabled = false,
   style,
 }: ButtonProps) {
+  const isDisabled = disabled || loading;
+
   return (
     <Pressable
       onPress={onPress}
+      disabled={isDisabled}
       style={({ pressed }) => [
         styles.button,
         outline ? styles.outlineButton : styles.filledButton,
         pressed && styles.pressed,
+        isDisabled && styles.disabledButton,
         style,
       ]}
     >
@@ -65,6 +71,10 @@ const styles = StyleSheet.create({
 
   outlineButton: {
     backgroundColor: "#ECF1E8",
+  },
+
+  disabledButton: {
+    opacity: 0.5,
   },
 
   text: {

@@ -1,5 +1,6 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
+import { apiPost } from "@/lib/api";
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -19,15 +20,23 @@ export default function Signup() {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
     setLoading(true);
-    console.log("loading...");
-    setTimeout(() => {
+    try {
+      await apiPost("/auth/signup", { email, password });
+      router.replace({
+        pathname: "/(auth)/verify-account",
+        params: { email },
+      });
+    } catch (err: any) {
+      // TODO: surface this in your UI (e.g. a toast or inline error text)
+      console.error(err.message);
+    } finally {
       setLoading(false);
-      router.replace("/(auth)/verify-account");
-      console.log("loading stopped");
-    }, 3000);
+    }
   };
 
   return (
@@ -48,6 +57,8 @@ export default function Signup() {
               Email Address
             </AppText>
             <TextInput
+              value={email}
+              onChangeText={setEmail}
               placeholder="Your email address"
               style={[styles.textInput, isFocused && styles.textInputFocused]}
               placeholderTextColor="#60655c"
@@ -62,6 +73,8 @@ export default function Signup() {
             <TextInput
               placeholder="Password"
               placeholderTextColor="#60655c"
+              value={password}
+              onChangeText={setPassword}
               textContentType="password"
               secureTextEntry={!isOpen}
               style={[

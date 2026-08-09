@@ -95,13 +95,13 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderWidth: 1.5,
     borderColor: "#f5f6f3",
     backgroundColor: "#F5F6F3",
     borderRadius: 10,
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: "PoppinsRegular",
     color: "#363a33",
   },

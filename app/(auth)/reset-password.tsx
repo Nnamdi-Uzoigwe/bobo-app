@@ -1,7 +1,209 @@
+// import AppText from "@/components/AppText";
+// import Button from "@/components/Button";
+// import Feather from "@expo/vector-icons/Feather";
+// import { router } from "expo-router";
+// import { useState } from "react";
+// import {
+//   Image,
+//   Keyboard,
+//   StyleSheet,
+//   TextInput,
+//   TouchableOpacity,
+//   TouchableWithoutFeedback,
+//   View,
+// } from "react-native";
+// import { SafeAreaView } from "react-native-safe-area-context";
+
+// export default function ResetPassword() {
+//   const [isFocused, setIsFocused] = useState(false);
+//   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+//   const [ConfirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+//   const [loading, setLoading] = useState(false);
+
+//   const handleProceed = () => {
+//     setLoading(true);
+//     console.log("loading...");
+//     setTimeout(() => {
+//       setLoading(false);
+//       router.replace("/(auth)/login");
+//       console.log("loading stopped");
+//     }, 3000);
+//   };
+
+//   return (
+//     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+//       <SafeAreaView style={styles.container}>
+//         <Image source={require("@/assets/images/app-logo.png")} />
+
+//         <View style={styles.header}>
+//           <AppText color="#5ead1d" weight="bold" size={30}>
+//             Reset your password
+//           </AppText>
+
+//           <AppText color="#363A33" weight="medium" size={17}>
+//             Create a new password and try not to forget it.
+//           </AppText>
+//         </View>
+
+//         <View style={styles.formContainer}>
+//           <View style={styles.passwordInputContainer}>
+//             <AppText color="#363a33" weight="semibold" size={16}>
+//               New Password
+//             </AppText>
+//             <TextInput
+//               placeholder="Your new password"
+//               placeholderTextColor="#60655c"
+//               textContentType="password"
+//               secureTextEntry={!isOpen}
+//               style={[
+//                 styles.passwordInput,
+//                 isPasswordFocused && styles.passwordInputFocused,
+//               ]}
+//               onFocus={() => setIsPasswordFocused(true)}
+//               onBlur={() => setIsPasswordFocused(false)}
+//             />
+//             <TouchableOpacity
+//               onPress={() => setIsOpen((isOpen) => !isOpen)}
+//               style={styles.passwordIconButton}
+//             >
+//               <Feather
+//                 name={isOpen ? "eye" : "eye-off"}
+//                 size={18}
+//                 color="#363a33"
+//               />
+//             </TouchableOpacity>
+//           </View>
+
+//           <View style={styles.passwordInputContainer}>
+//             <AppText color="#363a33" weight="semibold" size={16}>
+//               Confirm New Password
+//             </AppText>
+//             <TextInput
+//               placeholder="Confirm your new password"
+//               placeholderTextColor="#60655c"
+//               textContentType="password"
+//               secureTextEntry={!isConfirmOpen}
+//               style={[
+//                 styles.passwordInput,
+//                 ConfirmPasswordFocused && styles.confirmPasswordInputFocused,
+//               ]}
+//               onFocus={() => setConfirmPasswordFocused(true)}
+//               onBlur={() => setConfirmPasswordFocused(false)}
+//             />
+//             <TouchableOpacity
+//               onPress={() =>
+//                 setIsConfirmOpen((isConfirmOpen) => !isConfirmOpen)
+//               }
+//               style={styles.passwordIconButton}
+//             >
+//               <Feather
+//                 name={isConfirmOpen ? "eye" : "eye-off"}
+//                 size={18}
+//                 color="#363a33"
+//               />
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+
+//         <View style={{ width: "100%" }}>
+//           <Button
+//             label="Reset password"
+//             onPress={handleProceed}
+//             loading={loading}
+//           />
+//         </View>
+
+//         <View style={{ marginTop: 100, flexDirection: "row", gap: 3 }}>
+//           <AppText size={17}>Don't have an account?</AppText>
+//           <TouchableOpacity onPress={() => router.replace("/(auth)/signup")}>
+//             <AppText size={17} weight="bold">
+//               Sign up
+//             </AppText>
+//           </TouchableOpacity>
+//         </View>
+//       </SafeAreaView>
+//     </TouchableWithoutFeedback>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: "center",
+//     backgroundColor: "white",
+//     paddingHorizontal: 10,
+//     paddingTop: 15,
+//   },
+//   header: {
+//     marginTop: 30,
+//     alignSelf: "flex-start",
+//     gap: 5,
+//   },
+//   textInput: {
+//     borderWidth: 1.5,
+//     borderColor: "#f5f6f3",
+//     backgroundColor: "#F5F6F3",
+//     padding: 14,
+//     borderRadius: 10,
+//     fontSize: 16,
+//     fontFamily: "Poppins-Regular",
+//   },
+//   textInputFocused: {
+//     borderColor: "#5ead1d",
+//   },
+//   passwordInputFocused: {
+//     borderColor: "#5ead1d",
+//   },
+//   emailContainer: {
+//     gap: 4,
+//   },
+//   formContainer: {
+//     marginVertical: 40,
+//     width: "100%",
+//     gap: 10,
+//   },
+//   passwordInputContainer: {
+//     position: "relative",
+//     width: "100%",
+//     marginTop: 8,
+//     gap: 4,
+//   },
+//   passwordInput: {
+//     width: "100%",
+//     borderWidth: 1.5,
+//     borderColor: "#f5f6f3",
+//     backgroundColor: "#F5F6F3",
+//     padding: 14,
+//     paddingRight: 50,
+//     borderRadius: 10,
+//     fontSize: 16,
+//     fontFamily: "Poppins-Regular",
+//   },
+//   passwordIcon: {
+//     position: "absolute",
+//     top: 3,
+//     right: 14,
+//   },
+//   passwordIconButton: {
+//     position: "absolute",
+//     right: 14,
+//     top: 24,
+//     bottom: 0,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   confirmPasswordInputFocused: {
+//     borderColor: "#5ead1d",
+//   },
+// });
+
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
+import { apiPost } from "@/lib/api";
 import Feather from "@expo/vector-icons/Feather";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -15,21 +217,37 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ResetPassword() {
-  const [isFocused, setIsFocused] = useState(false);
+  const { resetToken } = useLocalSearchParams<{ resetToken: string }>();
+
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const [ConfirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
+  const [confirmPasswordFocused, setConfirmPasswordFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleProceed = () => {
+  const passwordsMatch = newPassword === confirmPassword;
+  const isFormValid =
+    newPassword.length >= 6 && confirmPassword.length >= 6 && passwordsMatch;
+
+  const handleProceed = async () => {
+    if (!passwordsMatch) {
+      setError("Passwords don't match");
+      return;
+    }
+
+    setError("");
     setLoading(true);
-    console.log("loading...");
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await apiPost("/auth/reset-password", { resetToken, newPassword });
       router.replace("/(auth)/login");
-      console.log("loading stopped");
-    }, 3000);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,6 +279,8 @@ export default function ResetPassword() {
                 styles.passwordInput,
                 isPasswordFocused && styles.passwordInputFocused,
               ]}
+              value={newPassword}
+              onChangeText={setNewPassword}
               onFocus={() => setIsPasswordFocused(true)}
               onBlur={() => setIsPasswordFocused(false)}
             />
@@ -87,8 +307,10 @@ export default function ResetPassword() {
               secureTextEntry={!isConfirmOpen}
               style={[
                 styles.passwordInput,
-                ConfirmPasswordFocused && styles.confirmPasswordInputFocused,
+                confirmPasswordFocused && styles.confirmPasswordInputFocused,
               ]}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
               onFocus={() => setConfirmPasswordFocused(true)}
               onBlur={() => setConfirmPasswordFocused(false)}
             />
@@ -105,6 +327,12 @@ export default function ResetPassword() {
               />
             </TouchableOpacity>
           </View>
+
+          {error !== "" && (
+            <AppText color="#E4572E" size={14}>
+              {error}
+            </AppText>
+          )}
         </View>
 
         <View style={{ width: "100%" }}>
@@ -112,6 +340,7 @@ export default function ResetPassword() {
             label="Reset password"
             onPress={handleProceed}
             loading={loading}
+            disabled={!isFormValid}
           />
         </View>
 
@@ -136,34 +365,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 15,
   },
-  header: {
-    marginTop: 30,
-    alignSelf: "flex-start",
-    gap: 5,
-  },
-  textInput: {
-    borderWidth: 1.5,
-    borderColor: "#f5f6f3",
-    backgroundColor: "#F5F6F3",
-    padding: 14,
-    borderRadius: 10,
-    fontSize: 16,
-    fontFamily: "Poppins-Regular",
-  },
-  textInputFocused: {
-    borderColor: "#5ead1d",
-  },
-  passwordInputFocused: {
-    borderColor: "#5ead1d",
-  },
-  emailContainer: {
-    gap: 4,
-  },
-  formContainer: {
-    marginVertical: 40,
-    width: "100%",
-    gap: 10,
-  },
+  header: { marginTop: 30, alignSelf: "flex-start", gap: 5 },
+  passwordInputFocused: { borderColor: "#5ead1d" },
+  formContainer: { marginVertical: 40, width: "100%", gap: 10 },
   passwordInputContainer: {
     position: "relative",
     width: "100%",
@@ -181,11 +385,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Poppins-Regular",
   },
-  passwordIcon: {
-    position: "absolute",
-    top: 3,
-    right: 14,
-  },
   passwordIconButton: {
     position: "absolute",
     right: 14,
@@ -194,7 +393,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  confirmPasswordInputFocused: {
-    borderColor: "#5ead1d",
-  },
+  confirmPasswordInputFocused: { borderColor: "#5ead1d" },
 });

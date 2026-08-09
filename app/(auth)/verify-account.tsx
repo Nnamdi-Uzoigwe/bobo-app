@@ -1,7 +1,9 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
 import OtpInput from "@/components/OtpInput";
-import { router } from "expo-router";
+import { apiPost } from "@/lib/api";
+import { useAuthStore } from "@/store/authStore";
+import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -14,16 +16,30 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function VerifyAccount() {
+  const { email } = useLocalSearchParams<{ email: string }>();
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
+  const setAuth = useAuthStore((s) => s.setAuth);
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
     setLoading(true);
-    console.log("loading...");
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const data = await apiPost("/auth/verify-otp", { email, otp });
+      setAuth(data.accessToken, data.user);
       router.replace("/(auth)/create-profile");
-      console.log("loading stopped");
-    }, 3000);
+    } catch (err: any) {
+      console.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    try {
+      await apiPost("/auth/resend-otp", { email });
+    } catch (err: any) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -35,21 +51,26 @@ export default function VerifyAccount() {
             Verify your new account
           </AppText>
           <AppText color="#363A33" weight="medium" size={16}>
-            Enter the verification code sent to your mail.
+            Enter the verification code sent to <AppText>{email}</AppText>.
           </AppText>
         </View>
 
         <View>
-          <OtpInput />
+          <OtpInput length={6} onComplete={setOtp} />
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button label="Continue" onPress={handleProceed} loading={loading} />
+          <Button
+            label="Continue"
+            onPress={handleProceed}
+            loading={loading}
+            disabled={otp.length !== 6}
+          />
         </View>
 
         <View style={styles.gap}>
           <AppText color="#363A33">Didn't receive the code? </AppText>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleResend}>
             <AppText color="#363A33" weight="semibold">
               Resend
             </AppText>

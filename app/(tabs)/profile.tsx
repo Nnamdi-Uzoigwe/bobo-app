@@ -79,6 +79,11 @@ export default function ProfileScreen() {
             onPress={() => router.push("/orders")}
           />
           <ProfileMenuRow
+            icon="map-pin"
+            label="Addresses"
+            onPress={() => router.push("/addresses")}
+          />
+          <ProfileMenuRow
             icon="credit-card"
             label="Payment"
             onPress={() => router.push("/payment")}

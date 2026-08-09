@@ -1,9 +1,9 @@
 import { LinearGradient } from "expo-linear-gradient";
 import {
-    ImageBackground,
-    ImageSourcePropType,
-    StyleSheet,
-    TouchableOpacity,
+  ImageBackground,
+  ImageSourcePropType,
+  StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import AppText from "../AppText";
 

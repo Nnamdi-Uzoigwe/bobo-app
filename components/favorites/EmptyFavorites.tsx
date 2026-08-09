@@ -8,14 +8,9 @@ export default function EmptyFavorites() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Feather
-          name="shopping-cart"
-          size={24}
-          color="black"
-          style={styles.cartIcon}
-        />
+        <Feather name="heart" size={24} color="black" style={styles.cartIcon} />
         <AppText size={24} weight="bold" color="#363a33">
-          Cart
+          Favorites
         </AppText>
       </View>
 

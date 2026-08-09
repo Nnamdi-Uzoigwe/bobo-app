@@ -1,6 +1,6 @@
 import AppText from "@/components/AppText";
 import { FavoriteItem as FavoriteItemType } from "@/store/favoritesStore";
-import { EvilIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
 type Props = {
@@ -24,7 +24,8 @@ export default function FavoriteItem({ item, onPress, onRemove }: Props) {
       </View>
 
       <TouchableOpacity onPress={onRemove} style={styles.heartButton}>
-        <EvilIcons name="heart" size={28} color="#EF4444" />
+        {/* <EvilIcons name="heart" size={28} color="#EF4444" /> */}
+        <Ionicons name="heart" size={28} color="#EF4444" />
       </TouchableOpacity>
     </TouchableOpacity>
   );
