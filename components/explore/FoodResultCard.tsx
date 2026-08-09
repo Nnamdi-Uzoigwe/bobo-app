@@ -103,7 +103,7 @@
 // });
 
 import AppText from "@/components/AppText";
-import type { MenuItem } from "@/components/home/MenuList";
+import type { MenuItem } from "@/store/menuStore";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 

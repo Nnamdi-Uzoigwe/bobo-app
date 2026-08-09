@@ -123,10 +123,10 @@
 import AppText from "@/components/AppText";
 import FiltersModal from "@/components/explore/FiltersModal";
 import FoodResultCard from "@/components/explore/FoodResultCard";
-import type { MenuItem } from "@/components/home/MenuList";
 import { apiGet } from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
+import type { MenuItem } from "@/store/menuStore";
 import { Feather } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";

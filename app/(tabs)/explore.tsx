@@ -11,7 +11,7 @@ export default function ExploreScreen() {
       <View style={styles.searchBar}>
         <Feather name="search" size={18} color="#9CA3AF" />
         <TextInput
-          placeholder="search for food..."
+          placeholder="Search for food..."
           placeholderTextColor="#9CA3AF"
           style={styles.searchInput}
         />

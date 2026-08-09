@@ -4,7 +4,9 @@
 // import SearchBar from "@/components/home/SearchBar";
 // import SearchOverlay from "@/components/home/SearchOverlay";
 // import TabNavigation from "@/components/home/TabNavigation";
-// import { useState } from "react";
+// import { useCartStore } from "@/store/cartStore";
+// import { useFavoritesStore } from "@/store/favoritesStore";
+// import { useEffect, useState } from "react";
 // import { ScrollView, StatusBar, StyleSheet } from "react-native";
 // import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -12,6 +14,13 @@
 //   const [category, setCategory] = useState("All");
 //   const [search, setSearch] = useState("");
 //   const [isSearchFocused, setIsSearchFocused] = useState(false);
+//   const hydrateCart = useCartStore((s) => s.hydrateCart);
+//   const hydrateFavorites = useFavoritesStore((s) => s.hydrateFavorites);
+
+//   useEffect(() => {
+//     hydrateCart();
+//     hydrateFavorites();
+//   }, []);
 
 //   return (
 //     <SafeAreaView style={styles.container} edges={["top"]}>
@@ -63,6 +72,8 @@
 // import SearchOverlay from "@/components/home/SearchOverlay";
 // import TabNavigation from "@/components/home/TabNavigation";
 // import { useCartStore } from "@/store/cartStore";
+// import { useFavoritesStore } from "@/store/favoritesStore";
+// import { useNotificationsStore } from "@/store/notificationsStore";
 // import { useEffect, useState } from "react";
 // import { ScrollView, StatusBar, StyleSheet } from "react-native";
 // import { SafeAreaView } from "react-native-safe-area-context";
@@ -72,9 +83,15 @@
 //   const [search, setSearch] = useState("");
 //   const [isSearchFocused, setIsSearchFocused] = useState(false);
 //   const hydrateCart = useCartStore((s) => s.hydrateCart);
+//   const hydrateFavorites = useFavoritesStore((s) => s.hydrateFavorites);
+//   const hydrateNotifications = useNotificationsStore(
+//     (s) => s.hydrateNotifications,
+//   );
 
 //   useEffect(() => {
 //     hydrateCart();
+//     hydrateFavorites();
+//     hydrateNotifications();
 //   }, []);
 
 //   return (
@@ -128,6 +145,8 @@ import SearchOverlay from "@/components/home/SearchOverlay";
 import TabNavigation from "@/components/home/TabNavigation";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import { useMenuStore } from "@/store/menuStore";
+import { useNotificationsStore } from "@/store/notificationsStore";
 import { useEffect, useState } from "react";
 import { ScrollView, StatusBar, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -138,10 +157,16 @@ export default function Home() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const hydrateCart = useCartStore((s) => s.hydrateCart);
   const hydrateFavorites = useFavoritesStore((s) => s.hydrateFavorites);
+  const hydrateNotifications = useNotificationsStore(
+    (s) => s.hydrateNotifications,
+  );
+  const hydrateMenu = useMenuStore((s) => s.hydrateMenu);
 
   useEffect(() => {
     hydrateCart();
     hydrateFavorites();
+    hydrateNotifications();
+    hydrateMenu();
   }, []);
 
   return (
@@ -165,11 +190,12 @@ export default function Home() {
 
         <Banner />
         <TabNavigation onSelect={setCategory} />
-        <MenuList category={category} />
+        <MenuList category={category} search={search} />
       </ScrollView>
 
       <SearchOverlay
         visible={isSearchFocused}
+        query={search}
         onClose={() => setIsSearchFocused(false)}
       />
     </SafeAreaView>
