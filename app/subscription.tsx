@@ -1,26 +1,31 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
 import ScreenHeader from "@/components/ui/ScreenHeader";
+import { useTheme } from "@/theme/ThemeProvider";
 import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SubscriptionScreen() {
+  const { colors } = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <ScreenHeader title="Subscription" />
 
-      <View style={styles.card}>
+      <View style={[styles.card, { borderColor: colors.border }]}>
         <MaterialIcons name="stars" size={28} color="#B8860B" />
         <AppText
           size={17}
           weight="bold"
-          color="#1F2937"
+          color={colors.text}
           style={styles.planName}
         >
           Premium Plan
         </AppText>
-        <AppText size={13} color="#61685c" style={styles.renewText}>
+        <AppText size={13} color={colors.textMuted} style={styles.renewText}>
           Renews on Sept 4, 2026
         </AppText>
         <Button
@@ -35,10 +40,9 @@ export default function SubscriptionScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#FFFFFF", paddingHorizontal: 10 },
+  container: { flex: 1, paddingHorizontal: 10 },
   card: {
     borderWidth: 1,
-    borderColor: "#E2E6DF",
     borderRadius: 16,
     padding: 20,
     alignItems: "center",

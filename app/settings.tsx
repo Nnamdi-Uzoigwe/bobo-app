@@ -2,6 +2,10 @@
 // import ProfileMenuRow from "@/components/profile/ProfileMenuRow";
 // import ConfirmModal from "@/components/ui/ConfirmModal";
 // import ScreenHeader from "@/components/ui/ScreenHeader";
+// import { useAuthStore } from "@/store/authStore";
+// import { useCartStore } from "@/store/cartStore";
+// import { useFavoritesStore } from "@/store/favoritesStore";
+// import { useOrdersStore } from "@/store/ordersStore";
 // import { useThemeStore } from "@/store/themeStore";
 // import { Feather } from "@expo/vector-icons";
 // import { useRouter } from "expo-router";
@@ -17,13 +21,24 @@
 //   const setMode = useThemeStore((s) => s.setMode);
 //   const isDark = mode === "dark";
 
+//   const logout = useAuthStore((s) => s.logout);
+
 //   const [modal, setModal] = useState<ModalType>(null);
 
 //   const handleConfirm = () => {
-//     // TODO: hook up real auth/session clearing and delete-account API calls
-//     if (modal === "logout" || modal === "delete") {
-//       router.replace("/login");
+//     if (modal === "logout") {
+//       logout();
+//       useCartStore.setState({ items: [] });
+//       useOrdersStore.setState({ orders: [] });
+//       useFavoritesStore.setState({ items: [] });
+//       router.replace("/(auth)/login");
 //     }
+
+//     if (modal === "delete") {
+//       // TODO: call a real delete-account API endpoint once it exists,
+//       // then run the same local-state clearing as logout above
+//     }
+
 //     setModal(null);
 //   };
 
@@ -178,8 +193,10 @@ import ConfirmModal from "@/components/ui/ConfirmModal";
 import ScreenHeader from "@/components/ui/ScreenHeader";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
+import { useFavoritesStore } from "@/store/favoritesStore";
 import { useOrdersStore } from "@/store/ordersStore";
 import { useThemeStore } from "@/store/themeStore";
+import { useTheme } from "@/theme/ThemeProvider";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
@@ -190,6 +207,7 @@ type ModalType = "logout" | "delete" | null;
 
 export default function SettingsScreen() {
   const router = useRouter();
+  const { colors } = useTheme();
   const mode = useThemeStore((s) => s.mode);
   const setMode = useThemeStore((s) => s.setMode);
   const isDark = mode === "dark";
@@ -203,7 +221,7 @@ export default function SettingsScreen() {
       logout();
       useCartStore.setState({ items: [] });
       useOrdersStore.setState({ orders: [] });
-      // TODO: clear favoritesStore too once its shape is confirmed
+      useFavoritesStore.setState({ items: [] });
       router.replace("/(auth)/login");
     }
 
@@ -216,7 +234,9 @@ export default function SettingsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <ScreenHeader title="Settings" />
 
       <ScrollView
@@ -226,49 +246,57 @@ export default function SettingsScreen() {
         <AppText
           size={13}
           weight="medium"
-          color="#61685c"
+          color={colors.textMuted}
           style={styles.sectionLabel}
         >
           General
         </AppText>
 
-        <View style={styles.section}>
+        <View style={[styles.section, { borderColor: colors.border }]}>
           <ProfileMenuRow
             icon="refresh-cw"
             label="Switch Account"
             onPress={() => {}}
           />
 
-          <View style={styles.row}>
+          <View style={[styles.row, { borderBottomColor: colors.border }]}>
             <View style={styles.left}>
-              <View style={styles.iconWrap}>
-                <Feather name="globe" size={18} color="#61685c" />
+              <View
+                style={[styles.iconWrap, { backgroundColor: colors.surface }]}
+              >
+                <Feather name="globe" size={18} color={colors.textMuted} />
               </View>
-              <AppText size={15} weight="medium" color="#363a33">
+              <AppText size={15} weight="medium" color={colors.text}>
                 Language
               </AppText>
             </View>
             <View style={styles.rowRight}>
-              <AppText size={14} color="#9CA3AF">
+              <AppText size={14} color={colors.textFaint}>
                 English
               </AppText>
-              <Feather name="chevron-right" size={18} color="#9CA3AF" />
+              <Feather
+                name="chevron-right"
+                size={18}
+                color={colors.textFaint}
+              />
             </View>
           </View>
 
           <View style={[styles.row, styles.lastRow]}>
             <View style={styles.left}>
-              <View style={styles.iconWrap}>
-                <Feather name="moon" size={18} color="#61685c" />
+              <View
+                style={[styles.iconWrap, { backgroundColor: colors.surface }]}
+              >
+                <Feather name="moon" size={18} color={colors.textMuted} />
               </View>
-              <AppText size={15} weight="medium" color="#363a33">
+              <AppText size={15} weight="medium" color={colors.text}>
                 Dark mode
               </AppText>
             </View>
             <Switch
               value={isDark}
               onValueChange={(value) => setMode(value ? "dark" : "light")}
-              trackColor={{ true: "#5EAD1D", false: "#E2E6DF" }}
+              trackColor={{ true: colors.primary, false: colors.border }}
             />
           </View>
         </View>
@@ -276,23 +304,28 @@ export default function SettingsScreen() {
         <AppText
           size={13}
           weight="medium"
-          color="#61685c"
+          color={colors.textMuted}
           style={styles.sectionLabel}
         >
           Danger Actions
         </AppText>
 
-        <View style={styles.section}>
-          <Pressable style={styles.row} onPress={() => setModal("delete")}>
+        <View style={[styles.section, { borderColor: colors.border }]}>
+          <Pressable
+            style={[styles.row, { borderBottomColor: colors.border }]}
+            onPress={() => setModal("delete")}
+          >
             <View style={styles.left}>
-              <View style={styles.iconWrap}>
-                <Feather name="trash-2" size={18} color="#E4572E" />
+              <View
+                style={[styles.iconWrap, { backgroundColor: colors.surface }]}
+              >
+                <Feather name="trash-2" size={18} color={colors.danger} />
               </View>
-              <AppText size={15} weight="medium" color="#E4572E">
+              <AppText size={15} weight="medium" color={colors.danger}>
                 Delete Account
               </AppText>
             </View>
-            <Feather name="chevron-right" size={18} color="#E4572E" />
+            <Feather name="chevron-right" size={18} color={colors.danger} />
           </Pressable>
 
           <Pressable
@@ -300,14 +333,16 @@ export default function SettingsScreen() {
             onPress={() => setModal("logout")}
           >
             <View style={styles.left}>
-              <View style={styles.iconWrap}>
-                <Feather name="log-out" size={18} color="#E4572E" />
+              <View
+                style={[styles.iconWrap, { backgroundColor: colors.surface }]}
+              >
+                <Feather name="log-out" size={18} color={colors.danger} />
               </View>
-              <AppText size={15} weight="medium" color="#E4572E">
+              <AppText size={15} weight="medium" color={colors.danger}>
                 Log out
               </AppText>
             </View>
-            <Feather name="chevron-right" size={18} color="#E4572E" />
+            <Feather name="chevron-right" size={18} color={colors.danger} />
           </Pressable>
         </View>
       </ScrollView>
@@ -329,12 +364,11 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#FFFFFF", paddingHorizontal: 10 },
+  container: { flex: 1, paddingHorizontal: 10 },
   scroll: { paddingBottom: 40, paddingTop: 4 },
   sectionLabel: { marginBottom: 6, marginTop: 4 },
   section: {
     borderWidth: 1,
-    borderColor: "#E2E6DF",
     borderRadius: 16,
     paddingHorizontal: 14,
     marginBottom: 24,
@@ -345,7 +379,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: "#F1F3EE",
   },
   lastRow: { borderBottomWidth: 0 },
   left: { flexDirection: "row", alignItems: "center", gap: 14 },
@@ -354,7 +387,6 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 17,
-    backgroundColor: "#F4F7F2",
     alignItems: "center",
     justifyContent: "center",
   },

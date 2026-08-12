@@ -3,16 +3,28 @@
 // import OrderCard from "@/components/orders/OrderCard";
 // import ScreenHeader from "@/components/ui/ScreenHeader";
 // import { useOrdersStore } from "@/store/ordersStore";
-// import { useMemo, useState } from "react";
-// import { FlatList, Pressable, StyleSheet, View } from "react-native";
+// import { useEffect, useMemo, useState } from "react";
+// import {
+//   ActivityIndicator,
+//   FlatList,
+//   Pressable,
+//   StyleSheet,
+//   View,
+// } from "react-native";
 // import { SafeAreaView } from "react-native-safe-area-context";
 
 // type TabKey = "current" | "previous";
 
 // export default function MyOrdersScreen() {
 //   const [activeTab, setActiveTab] = useState<TabKey>("current");
+//   const [loading, setLoading] = useState(true);
 
 //   const orders = useOrdersStore((s) => s.orders);
+//   const hydrateOrders = useOrdersStore((s) => s.hydrateOrders);
+
+//   useEffect(() => {
+//     hydrateOrders().finally(() => setLoading(false));
+//   }, []);
 
 //   const currentOrders = useMemo(
 //     () => orders.filter((o) => o.status === "current"),
@@ -25,6 +37,17 @@
 
 //   const hasAnyOrders = currentOrders.length > 0 || previousOrders.length > 0;
 //   const data = activeTab === "current" ? currentOrders : previousOrders;
+
+//   if (loading) {
+//     return (
+//       <SafeAreaView style={styles.container}>
+//         <ScreenHeader title="My Orders" rightIcon="more-vertical" />
+//         <View style={styles.centered}>
+//           <ActivityIndicator size="small" color="#5EAD1D" />
+//         </View>
+//       </SafeAreaView>
+//     );
+//   }
 
 //   return (
 //     <SafeAreaView style={styles.container}>
@@ -104,6 +127,7 @@
 //   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#EF4444" },
 //   listContent: { paddingBottom: 40 },
 //   noOrdersText: { textAlign: "center", marginTop: 40 },
+//   centered: { flex: 1, alignItems: "center", justifyContent: "center" },
 // });
 
 import AppText from "@/components/AppText";
@@ -111,6 +135,7 @@ import EmptyOrders from "@/components/orders/EmptyOrders";
 import OrderCard from "@/components/orders/OrderCard";
 import ScreenHeader from "@/components/ui/ScreenHeader";
 import { useOrdersStore } from "@/store/ordersStore";
+import { useTheme } from "@/theme/ThemeProvider";
 import { useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -126,6 +151,7 @@ type TabKey = "current" | "previous";
 export default function MyOrdersScreen() {
   const [activeTab, setActiveTab] = useState<TabKey>("current");
   const [loading, setLoading] = useState(true);
+  const { colors } = useTheme();
 
   const orders = useOrdersStore((s) => s.orders);
   const hydrateOrders = useOrdersStore((s) => s.hydrateOrders);
@@ -148,32 +174,39 @@ export default function MyOrdersScreen() {
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: colors.background }]}
+      >
         <ScreenHeader title="My Orders" rightIcon="more-vertical" />
         <View style={styles.centered}>
-          <ActivityIndicator size="small" color="#5EAD1D" />
+          <ActivityIndicator size="small" color={colors.primary} />
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <ScreenHeader title="My Orders" rightIcon="more-vertical" />
 
       {!hasAnyOrders ? (
         <EmptyOrders />
       ) : (
         <>
-          <View style={styles.tabRow}>
+          <View style={[styles.tabRow, { backgroundColor: colors.surface }]}>
             <Pressable
-              style={[styles.tab, activeTab === "current" && styles.activeTab]}
+              style={[
+                styles.tab,
+                activeTab === "current" && { backgroundColor: colors.card },
+              ]}
               onPress={() => setActiveTab("current")}
             >
               <AppText
                 size={14}
                 weight="semibold"
-                color={activeTab === "current" ? "#1F2937" : "#9CA3AF"}
+                color={activeTab === "current" ? colors.text : colors.textFaint}
               >
                 Current
               </AppText>
@@ -181,13 +214,18 @@ export default function MyOrdersScreen() {
             </Pressable>
 
             <Pressable
-              style={[styles.tab, activeTab === "previous" && styles.activeTab]}
+              style={[
+                styles.tab,
+                activeTab === "previous" && { backgroundColor: colors.card },
+              ]}
               onPress={() => setActiveTab("previous")}
             >
               <AppText
                 size={14}
                 weight="semibold"
-                color={activeTab === "previous" ? "#1F2937" : "#9CA3AF"}
+                color={
+                  activeTab === "previous" ? colors.text : colors.textFaint
+                }
               >
                 Previous
               </AppText>
@@ -201,7 +239,11 @@ export default function MyOrdersScreen() {
             ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
             renderItem={({ item }) => <OrderCard order={item} />}
             ListEmptyComponent={
-              <AppText size={14} color="#9CA3AF" style={styles.noOrdersText}>
+              <AppText
+                size={14}
+                color={colors.textFaint}
+                style={styles.noOrdersText}
+              >
                 No {activeTab} orders yet.
               </AppText>
             }
@@ -213,10 +255,9 @@ export default function MyOrdersScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#FFFFFF", paddingHorizontal: 10 },
+  container: { flex: 1, paddingHorizontal: 10 },
   tabRow: {
     flexDirection: "row",
-    backgroundColor: "#F1F3EE",
     borderRadius: 14,
     padding: 4,
     marginTop: 10,
@@ -231,7 +272,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 6,
   },
-  activeTab: { backgroundColor: "#FFFFFF" },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: "#EF4444" },
   listContent: { paddingBottom: 40 },
   noOrdersText: { textAlign: "center", marginTop: 40 },

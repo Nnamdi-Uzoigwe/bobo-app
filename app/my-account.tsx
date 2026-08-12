@@ -1,21 +1,66 @@
 import AppText from "@/components/AppText";
 import Button from "@/components/Button";
 import ScreenHeader from "@/components/ui/ScreenHeader";
+import { apiPatch } from "@/lib/api";
+import { useAuthStore } from "@/store/authStore";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
 import {
-    Image,
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    TextInput,
-    View,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+function getInitials(fullName?: string): string {
+  if (!fullName) return "?";
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return parts[0].slice(0, 2).toUpperCase();
+}
+
 export default function MyAccountScreen() {
-  const [name, setName] = useState("Daniel Jones");
+  const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
+  const setAuth = useAuthStore((s) => s.setAuth);
+
+  const [name, setName] = useState(user?.fullName ?? "");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const initials = getInitials(user?.fullName);
+  const isFormValid = name.trim() !== "";
+
+  const handleSave = async () => {
+    if (!isFormValid) return;
+
+    setLoading(true);
+    setError("");
+    try {
+      const data = await apiPatch(
+        "/users/me/account",
+        {
+          fullName: name,
+          ...(password.trim() !== "" ? { newPassword: password } : {}),
+        },
+        token ?? undefined,
+      );
+
+      if (token) {
+        setAuth(token, { ...user, ...data });
+      }
+      setPassword("");
+    } catch (err: any) {
+      setError(err.message || "Failed to save changes");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,10 +71,11 @@ export default function MyAccountScreen() {
         contentContainerStyle={styles.scroll}
       >
         <View style={styles.avatarWrap}>
-          <Image
-            source={require("@/assets/images/avatar.png")}
-            style={styles.avatar}
-          />
+          <View style={styles.avatar}>
+            <AppText color="#FFFFFF" size={24} weight="bold">
+              {initials}
+            </AppText>
+          </View>
           <Pressable style={styles.editBadge}>
             <Feather name="camera" size={14} color="#FFFFFF" />
           </Pressable>
@@ -50,15 +96,23 @@ export default function MyAccountScreen() {
             value={password}
             onChangeText={setPassword}
             style={styles.input}
-            placeholder="••••••••"
+            placeholder="Leave blank to keep current password"
             placeholderTextColor="#9CA3AF"
             secureTextEntry
           />
         </View>
 
+        {error !== "" && (
+          <AppText color="#E4572E" size={14} style={{ marginBottom: 10 }}>
+            {error}
+          </AppText>
+        )}
+
         <Button
           label="Save changes"
-          onPress={() => {}}
+          onPress={handleSave}
+          loading={loading}
+          disabled={!isFormValid}
           style={styles.saveButton}
         />
       </ScrollView>
@@ -74,7 +128,9 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     borderRadius: 45,
-    backgroundColor: "#F4F7F2",
+    backgroundColor: "#2F5233",
+    alignItems: "center",
+    justifyContent: "center",
   },
   editBadge: {
     position: "absolute",

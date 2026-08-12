@@ -1,13 +1,13 @@
 import { useIsTablet } from "@/hooks/useIsTablet";
+import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
+import { useTheme } from "@/theme/ThemeProvider";
 import { Feather, Octicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
-const ACTIVE_COLOR = "#4CAF50";
-const INACTIVE_COLOR = "#9CA3AF";
-
 function CartTabIcon({ color, focused }: { color: string; focused: boolean }) {
+  const { colors } = useTheme();
   const itemCount = useCartStore((s) =>
     s.items.reduce((sum, i) => sum + i.quantity, 0),
   );
@@ -18,7 +18,7 @@ function CartTabIcon({ color, focused }: { color: string; focused: boolean }) {
         <Feather name="shopping-cart" size={24} color={color} />
 
         {itemCount > 0 && (
-          <View style={styles.badge}>
+          <View style={[styles.badge, { borderColor: colors.background }]}>
             <Text style={styles.badgeText}>
               {itemCount > 9 ? "9+" : itemCount}
             </Text>
@@ -26,21 +26,42 @@ function CartTabIcon({ color, focused }: { color: string; focused: boolean }) {
         )}
       </View>
 
-      {focused && <View style={styles.activeDot} />}
+      {focused && (
+        <View style={[styles.activeDot, { backgroundColor: colors.primary }]} />
+      )}
     </View>
   );
 }
 
 export default function TabsLayout() {
   const isTablet = useIsTablet();
+  const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
+  const { colors } = useTheme();
+
+  if (!token) {
+    return <Redirect href="/(auth)/login" />;
+  }
+
+  if (!user?.fullName) {
+    return <Redirect href="/(auth)/create-profile" />;
+  }
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: ACTIVE_COLOR,
-        tabBarInactiveTintColor: INACTIVE_COLOR,
-        tabBarStyle: [styles.tabBar, isTablet && { height: 100 }],
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textFaint,
+        tabBarStyle: [
+          styles.tabBar,
+          {
+            backgroundColor: colors.background,
+            borderTopColor: colors.border,
+          },
+          isTablet && { height: 100 },
+        ],
       }}
     >
       <Tabs.Screen
@@ -49,7 +70,14 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.iconWrapper}>
               <Feather name="home" size={24} color={color} />
-              {focused && <View style={styles.activeDot} />}
+              {focused && (
+                <View
+                  style={[
+                    styles.activeDot,
+                    { backgroundColor: colors.primary },
+                  ]}
+                />
+              )}
             </View>
           ),
         }}
@@ -60,7 +88,14 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.iconWrapper}>
               <Feather name="compass" size={24} color={color} />
-              {focused && <View style={styles.activeDot} />}
+              {focused && (
+                <View
+                  style={[
+                    styles.activeDot,
+                    { backgroundColor: colors.primary },
+                  ]}
+                />
+              )}
             </View>
           ),
         }}
@@ -79,7 +114,14 @@ export default function TabsLayout() {
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.iconWrapper}>
               <Octicons name="heart" size={24} color={color} />
-              {focused && <View style={styles.activeDot} />}
+              {focused && (
+                <View
+                  style={[
+                    styles.activeDot,
+                    { backgroundColor: colors.primary },
+                  ]}
+                />
+              )}
             </View>
           ),
         }}
@@ -92,7 +134,14 @@ export default function TabsLayout() {
               <View>
                 <Feather name="user" size={24} color={color} />
               </View>
-              {focused && <View style={styles.activeDot} />}
+              {focused && (
+                <View
+                  style={[
+                    styles.activeDot,
+                    { backgroundColor: colors.primary },
+                  ]}
+                />
+              )}
             </View>
           ),
         }}
@@ -107,8 +156,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 8,
     borderTopWidth: 1,
-    borderTopColor: "#F0F0F0",
-    backgroundColor: "#FFFFFF",
     elevation: 0,
     shadowOpacity: 0,
   },
@@ -121,19 +168,7 @@ const styles = StyleSheet.create({
     width: 4,
     height: 4,
     borderRadius: 2,
-    backgroundColor: ACTIVE_COLOR,
   },
-  // notificationDot: {
-  //   position: "absolute",
-  //   top: -2,
-  //   right: -4,
-  //   width: 8,
-  //   height: 8,
-  //   borderRadius: 4,
-  //   backgroundColor: "#EF4444",
-  //   borderWidth: 1.5,
-  //   borderColor: "#FFFFFF",
-  // },
   badge: {
     position: "absolute",
     top: -6,
@@ -144,7 +179,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 3,
     backgroundColor: "#EF4444",
     borderWidth: 1.5,
-    borderColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
   },
