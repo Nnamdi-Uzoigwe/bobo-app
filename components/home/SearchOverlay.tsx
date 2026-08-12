@@ -1,37 +1,58 @@
+// import { useMenuStore } from "@/store/menuStore";
 // import { Feather } from "@expo/vector-icons";
+// import { router } from "expo-router";
 // import { Pressable, StyleSheet, View } from "react-native";
 // import AppText from "../AppText";
 
-// const suggestions = [
-//   "Chocolate boba",
-//   "Grilled beef burger",
-//   "Honey bee cake",
-//   "Classic momos",
-// ];
-
 // type Props = {
 //   visible: boolean;
+//   query: string;
 //   onClose: () => void;
 // };
 
-// export default function SearchOverlay({ visible, onClose }: Props) {
+// export default function SearchOverlay({ visible, query, onClose }: Props) {
+//   const items = useMenuStore((s) => s.items);
+
 //   if (!visible) return null;
+
+//   const trimmedQuery = query.trim().toLowerCase();
+
+//   const suggestions =
+//     trimmedQuery === ""
+//       ? items.slice(0, 4) // show a handful of items as default suggestions
+//       : items
+//           .filter((item) => item.name.toLowerCase().includes(trimmedQuery))
+//           .slice(0, 5);
+
+//   const handleSelect = (itemId: string) => {
+//     onClose();
+//     router.push(`/product/${itemId}`);
+//   };
 
 //   return (
 //     <>
 //       <Pressable style={styles.backdrop} onPress={onClose} />
 
 //       <View style={styles.dropdown}>
-//         {suggestions.map((item) => (
-//           <Pressable
-//             key={item}
-//             style={({ pressed }) => [styles.row, pressed && styles.rowPressed]}
-//           >
-//             <Feather name="arrow-up-right" size={16} color="#9CA3AF" />
-
-//             <AppText style={styles.rowText}>{item}</AppText>
-//           </Pressable>
-//         ))}
+//         {suggestions.length === 0 ? (
+//           <View style={styles.row}>
+//             <AppText style={styles.rowText}>No matches found</AppText>
+//           </View>
+//         ) : (
+//           suggestions.map((item) => (
+//             <Pressable
+//               key={item._id}
+//               style={({ pressed }) => [
+//                 styles.row,
+//                 pressed && styles.rowPressed,
+//               ]}
+//               onPress={() => handleSelect(item._id)}
+//             >
+//               <Feather name="arrow-up-right" size={16} color="#9CA3AF" />
+//               <AppText style={styles.rowText}>{item.name}</AppText>
+//             </Pressable>
+//           ))
+//         )}
 //       </View>
 //     </>
 //   );
@@ -43,12 +64,11 @@
 //     backgroundColor: "rgba(0,0,0,0.15)",
 //     zIndex: 5,
 //   },
-
 //   dropdown: {
 //     position: "absolute",
 //     left: 10,
 //     right: 10,
-//     top: 190, // we'll improve this later
+//     top: 190,
 //     backgroundColor: "white",
 //     borderRadius: 20,
 //     paddingVertical: 8,
@@ -59,7 +79,6 @@
 //     shadowRadius: 16,
 //     elevation: 6,
 //   },
-
 //   row: {
 //     flexDirection: "row",
 //     alignItems: "center",
@@ -67,11 +86,9 @@
 //     paddingHorizontal: 18,
 //     paddingVertical: 14,
 //   },
-
 //   rowPressed: {
 //     backgroundColor: "#FAFAFA",
 //   },
-
 //   rowText: {
 //     fontSize: 15,
 //     color: "#4B5563",
@@ -79,6 +96,7 @@
 // });
 
 import { useMenuStore } from "@/store/menuStore";
+import { useTheme } from "@/theme/ThemeProvider";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -92,6 +110,7 @@ type Props = {
 
 export default function SearchOverlay({ visible, query, onClose }: Props) {
   const items = useMenuStore((s) => s.items);
+  const { colors } = useTheme();
 
   if (!visible) return null;
 
@@ -99,7 +118,7 @@ export default function SearchOverlay({ visible, query, onClose }: Props) {
 
   const suggestions =
     trimmedQuery === ""
-      ? items.slice(0, 4) // show a handful of items as default suggestions
+      ? items.slice(0, 4)
       : items
           .filter((item) => item.name.toLowerCase().includes(trimmedQuery))
           .slice(0, 5);
@@ -113,10 +132,12 @@ export default function SearchOverlay({ visible, query, onClose }: Props) {
     <>
       <Pressable style={styles.backdrop} onPress={onClose} />
 
-      <View style={styles.dropdown}>
+      <View style={[styles.dropdown, { backgroundColor: colors.card }]}>
         {suggestions.length === 0 ? (
           <View style={styles.row}>
-            <AppText style={styles.rowText}>No matches found</AppText>
+            <AppText style={[styles.rowText, { color: colors.textMuted }]}>
+              No matches found
+            </AppText>
           </View>
         ) : (
           suggestions.map((item) => (
@@ -124,12 +145,18 @@ export default function SearchOverlay({ visible, query, onClose }: Props) {
               key={item._id}
               style={({ pressed }) => [
                 styles.row,
-                pressed && styles.rowPressed,
+                pressed && { backgroundColor: colors.surface },
               ]}
               onPress={() => handleSelect(item._id)}
             >
-              <Feather name="arrow-up-right" size={16} color="#9CA3AF" />
-              <AppText style={styles.rowText}>{item.name}</AppText>
+              <Feather
+                name="arrow-up-right"
+                size={16}
+                color={colors.textFaint}
+              />
+              <AppText style={[styles.rowText, { color: colors.textMuted }]}>
+                {item.name}
+              </AppText>
             </Pressable>
           ))
         )}
@@ -149,7 +176,6 @@ const styles = StyleSheet.create({
     left: 10,
     right: 10,
     top: 190,
-    backgroundColor: "white",
     borderRadius: 20,
     paddingVertical: 8,
     zIndex: 10,
@@ -166,11 +192,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 14,
   },
-  rowPressed: {
-    backgroundColor: "#FAFAFA",
-  },
   rowText: {
     fontSize: 15,
-    color: "#4B5563",
   },
 });
